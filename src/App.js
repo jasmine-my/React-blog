@@ -8,6 +8,14 @@ function App() {
   let [like, likeChange] = useState([0,0,0]);
   let [indexNum, indexNumChange] = useState(0);
 
+  const [list, setList] = useState('');
+  const handleChange = (e) => {
+      setList(e.target.value);
+  }
+  const handleSubmit = () => {
+    titleChange(prevList => [...title, list]);
+  }
+
   //모달창 닫고 여는 스위치 state
   let [modal, modalChange] = useState(false);
 
@@ -37,13 +45,20 @@ function App() {
                 let newlike = [...like];
                 newlike[i]++;
                 likeChange(newlike);
-              }}> 좋아용 </span> {like[i]} </h3>
+              }}> 🍁 </span> {like[i]} </h3>
               <p>11월 7일 발행</p>
               <hr/>
             </div>
           )
         })
       }
+
+      <div className="publish">
+        <form onSubmit={handleSubmit}>
+          <input placeholder="글 입력" onChange={handleChange}></input>
+          <button type="submit">저장</button>
+        </form>
+      </div>
 
       <button onClick={ () => {modalChange(!modal)} }>{!modal ? "열기" : "닫기"}</button>
 
