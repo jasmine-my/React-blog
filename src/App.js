@@ -5,16 +5,12 @@ import './App.css';
 function App() {
 
   let [title,titleChange] = useState([`구로구 디저트 맛집`, `일산 데이트 맛집`, `독산동 세탁소`]);
+  //좋아요 숫자 - 글을 추가하면 좋아요 Nan 으로 출력됨.. 기능 구현 추가 필요
   let [like, likeChange] = useState([0,0,0]);
   let [indexNum, indexNumChange] = useState(0);
 
+  //입력값 변경
   const [list, setList] = useState('');
-  const handleChange = (e) => {
-      setList(e.target.value);
-  }
-  const handleSubmit = () => {
-    titleChange(prevList => [...title, list]);
-  }
 
   //모달창 닫고 여는 스위치 state
   let [modal, modalChange] = useState(false);
@@ -52,12 +48,16 @@ function App() {
           )
         })
       }
-
+{/* 글 발행  */}
       <div className="publish">
-        <form onSubmit={handleSubmit}>
-          <input placeholder="글 입력" onChange={handleChange}></input>
-          <button type="submit">저장</button>
-        </form>
+          <input placeholder="글 입력" onChange={(e) => {
+      setList(e.target.value);
+  }}></input>
+          <button type="submit" onClick={ ()=>{
+            let arrayCopy = [...title];
+            arrayCopy.unshift(list); //array 맨 앞에 자료 추가하는 문법
+            titleChange( arrayCopy );
+            } }>저장</button>
       </div>
 
       <button onClick={ () => {modalChange(!modal)} }>{!modal ? "열기" : "닫기"}</button>
